@@ -35,30 +35,38 @@ test('Create Dynamo Table', () => {
   );
 });
 
-test.skip('Custom AWS Resources', () => {
+test('Lambda Resources', () => {
   const app = new App();
   // WHEN
   const stack = new CdkDynamoLambdaLoaderStack(app, 'MyTestStack');
   // THEN
+  expect(stack).to(countResources('AWS::IAM::Role', 2));
+  expect(stack).to(countResources('AWS::IAM::Policy', 2));
   expect(stack).to(
     haveResource(
-      'Custom::AWS',
+      'AWS::Lambda::Function',
       {
-        Create: { service: 'DynamoDB', action: 'putItem' },
+        Handler: 'init-db.handler',
+        Runtime: 'nodejs12.x',
+        MemorySize: 1200,
+        Timeout: 900,
       },
       ResourcePart.Properties,
       true,
     ),
   );
   expect(stack).to(
-    haveResource(
-      'Custom::AWS',
-      {
-        Create: { service: 'DynamoDB', action: 'batchWriteItem' },
-      },
-      ResourcePart.Properties,
-      true,
-    ),
+    haveResource('AWS::Lambda::Function', {
+      Handler: 'framework.onEvent',
+      Runtime: 'nodejs10.x',
+      Timeout: 900,
+    }),
   );
-  expect(stack).to(countResources('Custom::AWS', 11));
+  expect(stack).to(
+    haveResource('AWS::CloudFormation::CustomResource', {
+      ReadWriteCapacity: 40000,
+      DesiredCount: 1000000,
+      TableName: 'friends',
+    }),
+  );
 });

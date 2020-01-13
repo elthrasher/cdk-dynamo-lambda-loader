@@ -32,7 +32,7 @@ export const handler = async (event: CloudFormationCustomResourceEventCommon): P
   const { ReadWriteCapacity, DesiredCount, TableName } = event.ResourceProperties;
   for (let i = 0; i < DesiredCount / ReadWriteCapacity; i++) {
     const batch = new Array(ReadWriteCapacity / 25)
-      .fill(db.batchWrite({ RequestItems: { [TableName]: generateBatch() } }).promise())
+      .fill(undefined)
       .map(() => db.batchWrite({ RequestItems: { [TableName]: generateBatch() } }).promise());
     try {
       await Promise.all(batch);
