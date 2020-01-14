@@ -48,7 +48,7 @@ test('Lambda Resources', () => {
       {
         Handler: 'init-db.handler',
         Runtime: 'nodejs12.x',
-        MemorySize: 1200,
+        MemorySize: 3000,
         Timeout: 900,
       },
       ResourcePart.Properties,

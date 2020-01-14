@@ -6,14 +6,6 @@ import { Provider } from '@aws-cdk/custom-resources';
 
 const lambdaPath = `${__dirname}/lambda`;
 
-interface IFriend {
-  id: { S: string };
-  firstName: { S: string };
-  lastName: { S: string };
-  shoeSize: { N: number };
-  favoriteColor: { S: string };
-}
-
 export class CdkDynamoLambdaLoaderStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
