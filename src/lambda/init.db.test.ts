@@ -1,21 +1,27 @@
 import { CloudFormationCustomResourceEventCommon } from 'aws-lambda';
 
+// `batchWrite` as a jest mock lets me fire my fake friends into the ether
+// instead of call some real api. It also opens up `toBeCalledTimes`.
 const db = {
   batchWrite: jest.fn(() => {
     return { promise: (): Promise<void> => Promise.resolve() };
   }),
 };
 
-class MockDynamoClient {
+// My code calls `new DynamoDB.DocumentClient()` and expects a
+// db object with a batchWrite method
+class MockDocumentClient {
   constructor() {
     return db;
   }
 }
 
+// jest mocks will fully mock a module as it's required,
+// replacing it with my implementation.
 jest.mock('aws-sdk', () => {
   return {
     DynamoDB: {
-      DocumentClient: MockDynamoClient,
+      DocumentClient: MockDocumentClient,
     },
   };
 });
@@ -29,13 +35,11 @@ describe('initialize the database', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const handler = require('./init-db').handler;
     const event = {
-      ResourceProperties: {
-        ServiceToken: 'abc123',
-      },
+      ResourceProperties: {},
     } as CloudFormationCustomResourceEventCommon;
-    event.ResourceProperties['DesiredCount'] = 50;
-    event.ResourceProperties['ReadWriteCapacity'] = 25;
-    event.ResourceProperties['TableName'] = 'friends';
+    event.ResourceProperties.DesiredCount = 50;
+    event.ResourceProperties.ReadWriteCapacity = 25;
+    event.ResourceProperties.TableName = 'friends';
 
     await handler(event);
     expect(db.batchWrite).toBeCalledTimes(2);
