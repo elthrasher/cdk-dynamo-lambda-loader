@@ -1,6 +1,7 @@
 import { CustomResource } from '@aws-cdk/aws-cloudformation';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
-import { AssetCode, Function, Runtime } from '@aws-cdk/aws-lambda';
+import { Runtime } from '@aws-cdk/aws-lambda';
+import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { Construct, Duration, RemovalPolicy, Stack, StackProps } from '@aws-cdk/core';
 import { Provider } from '@aws-cdk/custom-resources';
 
@@ -23,9 +24,9 @@ export class CdkDynamoLambdaLoaderStack extends Stack {
       writeCapacity: ReadWriteCapacity,
     });
 
-    const initDBLambda = new Function(this, 'initDBFunction', {
-      code: new AssetCode(lambdaPath),
-      handler: 'init-db.handler',
+    const initDBLambda = new NodejsFunction(this, 'initDBFunction', {
+      entry: `${lambdaPath}/init-db.ts`,
+      handler: 'handler',
       memorySize: 3000,
       runtime: Runtime.NODEJS_12_X,
       timeout: Duration.minutes(15),
