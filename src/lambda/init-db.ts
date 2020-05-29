@@ -2,7 +2,7 @@ import { CloudFormationCustomResourceEventCommon } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { commerce, name, random } from 'faker';
 
-interface IFriend {
+interface Friend {
   id: string;
   firstName: string;
   lastName: string;
@@ -12,7 +12,7 @@ interface IFriend {
 
 const db = new DynamoDB.DocumentClient();
 
-const generateItem = (): IFriend => {
+const generateItem = (): Friend => {
   return {
     id: random.uuid(),
     firstName: name.firstName(),
@@ -22,7 +22,7 @@ const generateItem = (): IFriend => {
   };
 };
 
-const generateBatch = (batchSize = 25): { PutRequest: { Item: IFriend } }[] => {
+const generateBatch = (batchSize = 25): { PutRequest: { Item: Friend } }[] => {
   return new Array(batchSize).fill(undefined).map(() => {
     return { PutRequest: { Item: generateItem() } };
   });

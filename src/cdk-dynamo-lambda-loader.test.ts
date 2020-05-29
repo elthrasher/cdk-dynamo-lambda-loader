@@ -46,7 +46,7 @@ test('Lambda Resources', () => {
     haveResource(
       'AWS::Lambda::Function',
       {
-        Handler: 'init-db.handler',
+        Handler: 'index.handler',
         Runtime: 'nodejs12.x',
         MemorySize: 3000,
         Timeout: 900,
