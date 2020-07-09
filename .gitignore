@@ -11,8 +11,7 @@
 !jest.config.js
 
 # Output Dir
-.build
-.cache
+.parcel-cache
 
 coverage
 
