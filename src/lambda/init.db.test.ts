@@ -18,11 +18,9 @@ class MockDocumentClient {
 
 // jest mocks will fully mock a module as it's required,
 // replacing it with my implementation.
-jest.mock('aws-sdk', () => {
+jest.mock('aws-sdk/clients/dynamodb', () => {
   return {
-    DynamoDB: {
-      DocumentClient: MockDocumentClient,
-    },
+    DocumentClient: MockDocumentClient,
   };
 });
 

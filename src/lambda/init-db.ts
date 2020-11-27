@@ -1,5 +1,5 @@
 import { CloudFormationCustomResourceEventCommon } from 'aws-lambda';
-import { DynamoDB } from 'aws-sdk';
+import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { commerce, name, random } from 'faker';
 
 interface Friend {
@@ -10,7 +10,7 @@ interface Friend {
   favoriteColor: string;
 }
 
-const db = new DynamoDB.DocumentClient();
+const db = new DocumentClient();
 
 const generateItem = (): Friend => {
   return {

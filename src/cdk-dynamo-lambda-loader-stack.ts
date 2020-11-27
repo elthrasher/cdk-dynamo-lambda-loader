@@ -26,8 +26,10 @@ export class CdkDynamoLambdaLoaderStack extends Stack {
 
     const initDBLambda = new NodejsFunction(this, 'initDBFunction', {
       entry: `${lambdaPath}/init-db.ts`,
+      externalModules: [],
       handler: 'handler',
       memorySize: 3000,
+      minify: true,
       runtime: Runtime.NODEJS_12_X,
       timeout: Duration.minutes(15),
     });
