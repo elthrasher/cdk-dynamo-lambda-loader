@@ -22,7 +22,7 @@
     "aws-cdk": "1.87.1",
     "aws-sdk": "^2.833.0",
     "copyfiles": "^2.4.1",
-    "esbuild": "^0.8.36",
+    "esbuild": "^0.8.39",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
