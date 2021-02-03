@@ -20,7 +20,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "aws-cdk": "1.87.1",
-    "aws-sdk": "^2.834.0",
+    "aws-sdk": "^2.835.0",
     "copyfiles": "^2.4.1",
     "esbuild": "^0.8.39",
     "eslint": "^7.19.0",
