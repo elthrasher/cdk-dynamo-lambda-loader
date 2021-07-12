@@ -19,7 +19,7 @@
     "@types/node": "^16.3.0",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
-    "aws-cdk": "1.111.0",
+    "aws-cdk": "1.112.0",
     "aws-sdk": "^2.942.0",
     "copyfiles": "^2.4.1",
     "esbuild": "^0.12.15",
